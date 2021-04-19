@@ -16,4 +16,3 @@ class PetSerializer(serializers.ModelSerializer):
         model = Pet
         fields = ['id', 'gender', 'name', 'age', 'weight', 'type', 'breed', 'type', 'disposition', 'availability',
                   'description', 'picture_primary', 'picture_second', 'picture_third', 'owner']
-        #                   'picture_second', 'picture_third'
