@@ -26,6 +26,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_shelter = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f"{user.email}'s profile"
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:

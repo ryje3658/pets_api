@@ -2,18 +2,20 @@ from rest_framework import serializers
 from pets.models import Pet, Profile
 from django.contrib.auth.models import User
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['is_shelter']
+
+
 class UserSerializer(serializers.ModelSerializer):
     pets = serializers.HyperlinkedRelatedField(many=True, view_name='pet-detail', read_only=True)
-    profile = None
+    profile = ProfileSerializer()
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'pets', 'profile']
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ['is_shelter']
 
 class PetSerializer(serializers.ModelSerializer):
     owner = serializers.HyperlinkedRelatedField(many=False, view_name='user-detail', read_only=True)
