@@ -1,13 +1,11 @@
-from pets.models import Pet
-from pets.serializers import PetSerializer
+from pets.models import Pet, Profile
+from pets.serializers import PetSerializer, UserSerializer, ProfileSerializer
 from django.contrib.auth.models import User
-from pets.serializers import UserSerializer
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import generics, permissions
 from pets.permissions import IsOwnerOrReadOnly
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.response import Response
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()
@@ -31,6 +29,7 @@ class PetDetail(generics.RetrieveUpdateDestroyAPIView):
                           IsOwnerOrReadOnly]
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
+
 
 @api_view(['GET'])
 def api_root(request, format=None):
