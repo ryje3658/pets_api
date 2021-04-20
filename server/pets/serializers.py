@@ -7,12 +7,18 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Profile object. Extends base User model with fields relevant to status and shelter attributes.
+    """
     class Meta:
         model = Profile
         fields = ['is_shelter', 'shelter_name', 'shelter_bio']
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for User object. Can only have pets if they are a shelter.
+    """
     pets = serializers.HyperlinkedRelatedField(many=True, view_name='pet-detail', read_only=True)
     profile = ProfileSerializer()
 
@@ -22,6 +28,9 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PetSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Pet object. Owner refers to the shelter that owns the pet.
+    """
     owner = serializers.HyperlinkedRelatedField(many=False, view_name='user-detail', read_only=True)
 
     class Meta:
@@ -30,17 +39,23 @@ class PetSerializer(serializers.ModelSerializer):
                   'description', 'picture_primary', 'picture_second', 'picture_third', 'owner']
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-
+    """
+    Serializer for JWT tokens. Generated when user logs in.
+    """
     @classmethod
     def get_token(cls, user):
         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
 
         # Add custom claims to include in generated token
         token['username'] = user.username
+        token['is_shelter'] = user.profile.is_shelter
         return token
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+    """
+    Serializer for normal User object with no special permissions.
+    """
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -79,7 +94,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class RegisterShelterSerializer(serializers.ModelSerializer):
+    """
+    Creates a User object, and updates the user.profile object attribute of is_shelter to True. Also uses the given
+    username as the name of the shelter.
+    """
     email = serializers.EmailField(
         required=True,
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -115,5 +135,12 @@ class RegisterShelterSerializer(serializers.ModelSerializer):
 
         user.set_password(validated_data['password'])
         user.save()
+
+        # Update profile object to reflect status as a shelter.
+        profile = Profile.objects.get(pk=user.id)
+        profile.is_shelter = True
+        profile.shelter_name = validated_data['username']
+
+        profile.save()
 
         return user

@@ -14,3 +14,9 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Write permissions are only allowed to the owner of the pet.
         return obj.owner == request.user
+
+class IsShelterOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow shelters to create a Pet object.
+    """
+    pass
