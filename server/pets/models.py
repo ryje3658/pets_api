@@ -25,9 +25,8 @@ class Pet(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_shelter = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{user.email}'s profile"
+    shelter_name = models.CharField(max_length=50, null=True, blank=True)
+    shelter_bio = models.TextField(default=None, null=True, blank=True)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
