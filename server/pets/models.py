@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 class Pet(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100, blank=False)
     age = models.IntegerField()
     weight = models.IntegerField()
     type = models.CharField(max_length=20)

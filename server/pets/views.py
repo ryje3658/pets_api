@@ -35,12 +35,36 @@ class UserDetail(generics.RetrieveAPIView):
 
 class PetList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    queryset = Pet.objects.all()
     serializer_class = PetSerializer
+
+    def get_queryset(self):
+        """
+        Sets queryset to all Pet Objects. Then checks for query params of 'breed', 'type' , 'availability',
+        'disposition', etc. If one of those is present, it alters the query according to that param and returns a new
+        queryset with the Pet objects filtered by that. Can only accept one query param to filter by.
+        """
+        queryset = Pet.objects.all()
+
+        # Tries to get data from the query params
+        breed = self.request.query_params.get('breed')
+        type = self.request.query_params.get('type')
+        availability = self.request.query_params.get('availability')
+        disposition = self.request.query_params.get('disposition')
+
+        # Alters queryset according to the presence of a query param
+        if breed is not None:
+            queryset = queryset.filter(breed=breed)
+        elif type is not None:
+            queryset = queryset.filter(type=type)
+        elif availability is not None:
+            queryset = queryset.filter(availability=availability)
+        elif disposition is not None:
+            queryset = queryset.filter(disposition=disposition)
+
+        return queryset
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
 
 class PetDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,

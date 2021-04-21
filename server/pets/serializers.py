@@ -38,6 +38,7 @@ class PetSerializer(serializers.ModelSerializer):
         fields = ['id', 'gender', 'name', 'age', 'weight', 'type', 'breed', 'type', 'disposition', 'availability',
                   'description', 'picture_primary', 'picture_second', 'picture_third', 'owner']
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     """
     Serializer for JWT tokens. Generated when user logs in.
