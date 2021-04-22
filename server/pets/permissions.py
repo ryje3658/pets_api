@@ -5,7 +5,6 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
     """
-
     def has_object_permission(self, request, view, obj):
         # Read permissions are allowed to any request,
         # so we'll always allow GET, HEAD or OPTIONS requests.
@@ -19,7 +18,6 @@ class IsShelterCanCreate(permissions.BasePermission):
     """
     Custom permission to only allow shelters to create a Pet object.
     """
-
     def has_permission(self, request, view):
         # Create permissions are only allowed to shelters
         if request.method in permissions.SAFE_METHODS:

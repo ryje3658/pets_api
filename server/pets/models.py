@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 class Pet(models.Model):
+    """Model for Pet object. Owner attribute refers to the User object that created and owns the Pet."""
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=100, blank=False)
     age = models.IntegerField()
@@ -23,6 +24,10 @@ class Pet(models.Model):
         ordering = ['created']
 
 class Profile(models.Model):
+    """
+    Model for Profile object. One to one relationship with User and is created everytime a user object is created, with
+    the is_shelter field being set to True or False depending on the kind of user being registered. (User or Shelter)
+    """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     is_shelter = models.BooleanField(default=False)
     shelter_name = models.CharField(max_length=50, null=True, blank=True)
