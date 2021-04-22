@@ -15,8 +15,18 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # Write permissions are only allowed to the owner of the pet.
         return obj.owner == request.user
 
-class IsShelterOrReadOnly(permissions.BasePermission):
+class IsShelterCanCreate(permissions.BasePermission):
     """
     Custom permission to only allow shelters to create a Pet object.
     """
-    pass
+
+    def has_permission(self, request, view):
+        # Create permissions are only allowed to shelters
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        is_shelter = request.user.profile.is_shelter
+        if is_shelter:
+            return True
+        else:
+            return False
