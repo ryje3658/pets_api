@@ -11,7 +11,7 @@ class Pet(models.Model):
     weight = models.IntegerField()
     type = models.CharField(max_length=20)
     breed = models.CharField(max_length=40)
-    disposition = models.CharField(max_length=30)
+    disposition = models.CharField(max_length=100)
     availability = models.CharField(max_length=30)
     description = models.TextField()
     picture_primary = models.ImageField(blank=False)  # Primary picture is required
