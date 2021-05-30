@@ -15,7 +15,7 @@ Add one of below routes to base url to make a call. Make sure there is a  traili
 
 ### api/pets/<insert query param to filter by breed, type, availability, disposition> [GET]
 - Send the request to api/pets/ and then in the query params you’d put either breed, type, availability, or disposition and then the request would return the Pets filtered by the value you gave it (example below would return all animals of breed “CuteCat”)
-  ![alt text](https://github.com/ryje3658/pets_api/queryex.png "Pet Search Example")
+  ![alt text](https://github.com/ryje3658/pets_api/blob/master/queryex.PNG "Pet Search Example")
 
 ### api/pets/<int:id>/ [GET, PUT, PATCH, DELETE]
  - Refers to a single pet object 
