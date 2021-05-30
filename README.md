@@ -13,6 +13,8 @@ Isn’t actually an api call you’d use. But while debugging it does have a nic
 ### api/ [GET]
 Isn’t actually an api call you’d use. But while debugging it does have a nice UI to click around the API and follow hyperlinks to endpoints.
 
-
+### api/pets/ [GET, POST]
+- Get - Returns all Pet objects in the database
+- Post - Allows to post a pet to the database (You need to have a valid JWT in the header of the API call as Authorization: Bearer <key>, which you can get by logging in and copying the key returned from the api/login/ route. (Otherwise if you just want to experiment for now, it may be easier to add pets through the admin panel.)
 
 
