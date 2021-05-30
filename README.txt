@@ -3,6 +3,8 @@ API backend for pets application for Capstone.
 
 API use guide
 
+API use guide
+
 
 BASE ROUTE: jensenry.pythonanywhere.com/
 Add to base to make a call and make sure there is a  trailing ‘/’ at the end (Ex.  jensenry.pythonanywhere.com/pets/)
@@ -33,3 +35,4 @@ api/register/ [POST]
 Receives username, email, password, confirm password and registers that user into the database if all given information is valid, should return relevant errors if bad information is given (a non unique email or username, weak password, etc.)
 api/registershelter/ [POST]
 Receives username, email, password, confirm password and registers that user into the database as above route, but will also update the User’s profile to be a shelter and will use the username field as the name of the shelter
+
